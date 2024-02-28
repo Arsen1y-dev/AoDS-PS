@@ -45,6 +45,7 @@ def main():
 
     # 9. Запросить у пользователя имя файла и создать файл с таким именем
     filename = input("Введите имя файла для создания: ")
+
     with open(filename, 'w') as f:
         f.write(current_user)
 
