@@ -5,9 +5,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="50ef5ec8-0234-4855-aacf-d12570862e44" name="Changes" comment="ц">
-      <change afterPath="$PROJECT_DIR$/1.ipynb" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Задание 1. Библиотеки os, os.path, shutil.py" beforeDir="false" afterPath="$PROJECT_DIR$/Задание 1. Библиотеки os, os.path, shutil.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ Задание 2. Поиск файлов и в файлах.py" beforeDir="false" afterPath="$PROJECT_DIR$/ Задание 2. Поиск файлов и в файлах.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/file for tests.py" beforeDir="false" afterPath="$PROJECT_DIR$/file for tests.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -94,6 +93,7 @@
       <option name="presentableId" value="Default" />
       <updated>1709061487926</updated>
       <workItem from="1709061489665" duration="634000" />
+      <workItem from="1710314782494" duration="22000" />
     </task>
     <task id="LOCAL-00001" summary="ц">
       <option name="closed" value="true" />

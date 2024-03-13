@@ -33,7 +33,7 @@ def find_russian_vehicle_numbers(text):
 starting_letter = 'a'
 
 # Путь к папке с файлами
-folder_path = 'путь_к_папке'
+folder_path = '/Users/arseniy/PycharmProjects/AoDS&PS/task2'
 
 # Получаем список файлов в папке
 files = [f for f in os.listdir(folder_path) if os.path.isfile(os.path.join(folder_path, f))]

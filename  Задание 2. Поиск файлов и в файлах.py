@@ -1,24 +1,110 @@
+import fnmatch
 import os
 import re
-import fnmatch
+import chardet
 
-def find_files_and_data(folder, letter, types):
-    for root, dirs, files in os.walk(folder):
-        for file in files:
-            if fnmatch.fnmatch(file, f'{letter}*#*.txt'):
-                file_path = os.path.join(root, file)
-                with open(file_path, 'r') as f:
-                    data = f.read()
-                    for data_type in types:
-                        if data_type == 'time':
-                            times = re.findall(r'\b([01]?[0-9]|2[0-3]):[0-5][0-9](?::[0-5][0-9])?\b', data)
-                            print(f'Times found in {file}: {times}')
-                        elif data_type == 'email':
-                            emails = re.findall(r'[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}', data)
-                            print(f'Email addresses found in {file}: {emails}')
+files = []
+letter = input('Задайте букву: ')
+for file in os.listdir('task2'):
+    if fnmatch.fnmatch(file, '*.txt'):
+        filename = file[:-4]
+        if filename[0] == letter:
+            if len(filename) >= 7:
+                if filename[-2] in '1234567890':
+                    files.append(file)
 
-folder = 'task 2'
-letter = 'A'
-types = ['time', 'email']  
+def detect_encoding(file_path):
+    with open(file_path, 'rb') as f:
+        result = chardet.detect(f.read())
+    return result['encoding']
 
-find_files_and_data(folder, letter, types)
+# время в формате hh:mm или hh:mm:ss;
+def find_time_in_files(file):
+    encoding = detect_encoding(file)
+    time_pattern = re.compile(r'\b(?:[01]\d|2[0-3]):[0-5]\d(?::[0-5]\d)?\b')
+    with open(file, 'r', encoding=encoding) as f:
+        content = f.read()
+    matches = re.findall(time_pattern, content)
+    return matches
+
+# email-адреса;
+def find_emails_in_files(file):
+    encoding = detect_encoding(file)
+    email_pattern = re.compile(r'\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Z|a-z]{2,}\b')
+    with open(file, 'r', encoding=encoding) as f:
+        content = f.read()
+    matches = re.findall(email_pattern, content)
+    return matches
+
+# url-адреса;
+def find_urls_in_files(file):
+    encoding = detect_encoding(file)
+    url_pattern = re.compile(r'\b(?:https?|ftp):\/\/[^\s/$.?#].[^\s]*\b')
+    with open(file, 'r', encoding=encoding) as f:
+        content = f.read()
+    matches = re.findall(url_pattern, content)
+    return matches
+
+# корректные имена переменных в Питоне;
+def find_valid_python_variable_names(file):
+    encoding = detect_encoding(file)
+    variable_name_pattern = re.compile(r'\b[a-zA-Z_]\w*\b')
+    with open(file, 'r', encoding=encoding) as f:
+        content = f.read()
+    matches = re.findall(variable_name_pattern, content)
+    return matches
+
+# даты в различных форматах;
+def find_dates_in_files(file):
+    encoding = detect_encoding(file)
+    date_pattern = re.compile(r"\b\d{1,2}[-/.]\d{1,2}[-/.]\d{4}\b|\b\d{4}[-/.]\d{1,2}[-/.]\d{1,2}\b")
+    #date_pattern = re.compile(r'\b\d{1,4}[-/.]\d{1,2}[-/.]\d{1,4}\b|\b\d{1,2}[-/.]\d{1,2}[-/.]\d{2,4}\b|\b\d{1,2}[-/.]\w{1,2}[-/.]\d{2,4}\b')
+    with open(file, 'r', encoding=encoding) as file:
+        content = file.read()
+    matches = re.findall(date_pattern, content)
+    return matches
+
+# вещественные числа;
+def find_float_numbers(file):
+    encoding = detect_encoding(file)
+    float_pattern = re.compile(r'\b\d+\.\d+\b|\b\d+\.\d+e[+-]?\d+\b|\b\d+e[+-]?\d+\b')
+    with open(file, 'r', encoding=encoding) as file:
+        content = file.read()
+    matches = re.findall(float_pattern, content)
+    return matches
+
+# номерные знаки российских транспортных средств.
+def find_russian_vehicle_numbers(file):
+    encoding = detect_encoding(file)
+    pattern = re.compile(r'[A-ЯA-Z]{1}[0-9]{3}[A-ЯA-Z]{2}|[A-ЯA-Z]{1}[0-9]{3}[A-ЯA-Z]{2}[0-9]{2,3}|[0-9]{4}[A-ЯA-Z]{2}')
+    with open(file, 'r', encoding=encoding) as file:
+        content = file.read()
+    matches = re.findall(pattern, content)
+    return matches
+
+
+for file in files:
+    file_path = os.path.join('task2', file)
+    print(f"В файле {file}:")
+    if find_time_in_files(file_path):
+        time = find_time_in_files(file_path)
+        print(f"Время: {time}")
+    if find_emails_in_files(file_path):
+        email = find_emails_in_files(file_path)
+        print(f"Email-адреса: {email}")
+    if find_urls_in_files(file_path):
+        url = find_urls_in_files(file_path)
+        print(f"URL-адреса: {url}")
+    if find_valid_python_variable_names(file_path):
+        name = find_valid_python_variable_names(file_path)
+        print(f"Имена переменных в Python: {name}")
+    if find_dates_in_files(file_path):
+        date = find_dates_in_files(file_path)
+        print(f'Дата: {date}')
+    if find_float_numbers(file_path):
+        float_number = find_float_numbers(file_path)
+        print(f'Вещественные числа: {float_number}')
+    if find_russian_vehicle_numbers(file_path):
+        vehicle_numbers = find_russian_vehicle_numbers(file_path)
+        print(f'Номерные знаки российских транспортных средств: {vehicle_numbers}')
+    print()
