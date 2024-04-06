@@ -1,51 +1,69 @@
 import csv
 
-def read_csv_file(file_name):
-    students = []
-    with open(file_name, 'r', newline='') as file:
-        reader = csv.DictReader(file)
+def read_csv_file(file_path):
+    data = []
+    with open(file_path, 'r', encoding='utf-8') as file:
+        reader = csv.reader(file, delimiter=';')
+        next(reader)  
         for row in reader:
-            students.append(row)
-    return students
+            data.append(row)
+    return data
 
-def task1(students):
+
+def count_students_by_subject_and_district(data, subject, district):
     count = 0
-    for student in students:
-        if student['district'] == 'Ц' and student['favorite_subject'] == 'английский':
+    for row in data:
+        if row[0] == district and row[2] == subject:
             count += 1
-    print(f"Количество учеников в Центральном округе, выбравших английский язык: {count}")
+    return count
 
-def task2(students):
+
+def calculate_average_score_by_district(data, district):
     scores = []
-    for student in students:
-        if student['district'] == 'В':
-            scores.append(float(student['test_score']))
-    average_score = sum(scores) / len(scores)
-    print(f"Средний тестовый балл у учеников Восточного округа: {average_score}")
+    for row in data:
+        if row[0] == district:
+            scores.append(int(row[3]))
+    if scores:
+        return sum(scores) / len(scores)
+    else:
+        return 0
 
-def task3(students):
-    count = 0
-    for student in students:
-        if student['district'] in ['З', 'ЮЗ', 'Ц']:
-            count += 1
-    percentage = (count / len(students)) * 100
-    print(f"Процент участников из округов З, ЮЗ и Ц: {percentage}%")
 
-def task4(students, output_file):
-    math_students = [student for student in students if student['favorite_subject'] == 'математика']
-    with open(output_file, 'w', newline='') as file:
-        writer = csv.DictWriter(file, fieldnames=math_students[0].keys())
-        writer.writeheader()
-        for student in math_students:
-            writer.writerow(student)
-    print(f"Файл {output_file} успешно создан.")
-            
+def calculate_percentage_of_districts(data, districts):
+    total_students = len(data)
+    count_districts = 0
+    for row in data:
+        if row[0] in districts:
+            count_districts += 1
+    return (count_districts / total_students) * 100
 
-file_name = 'var3.csv'
-output_file = 'var3_output.csv'
-students = read_csv_file(file_name)
 
-task1(students)
-task2(students)
-task3(students)
-task4(students, output_file)
+def write_students_by_subject_to_csv(data, subject, output_file):
+    with open(output_file, 'w', newline='', encoding='utf-8') as file:
+        writer = csv.writer(file, delimiter=';')
+        writer.writerow(['округ', 'код ученика', 'любимый предмет', 'балл'])
+        for row in data:
+            if row[2] == subject:
+                writer.writerow(row)
+
+
+if __name__ == "__main__":
+
+    file_path = 'var3.csv'
+    students_data = read_csv_file(file_path)
+
+
+    english_students_in_central_district = count_students_by_subject_and_district(students_data, 'английский язык', 'Ц')
+    print("1) Количество учеников в Центральном округе, выбравших английский язык:", english_students_in_central_district)
+
+
+    average_score_in_eastern_district = calculate_average_score_by_district(students_data, 'В')
+    print("2) Средний тестовый балл у учеников Восточного округа:", average_score_in_eastern_district)
+
+    districts_of_interest = ['З', 'ЮЗ', 'Ц']
+    percentage_of_districts = calculate_percentage_of_districts(students_data, districts_of_interest)
+    print("3) Процентное соотношение числа участников из определенных округов:", percentage_of_districts)
+
+    output_file_path = 'res.csv'
+    write_students_by_subject_to_csv(students_data, 'математика', output_file_path)
+    print("4) Файл res.csv создан успешно.")
