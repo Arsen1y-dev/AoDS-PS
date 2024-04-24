@@ -62,7 +62,7 @@ if __name__ == "__main__":
 
     districts_of_interest = ['З', 'ЮЗ', 'Ц']
     percentage_of_districts = calculate_percentage_of_districts(students_data, districts_of_interest)
-    print("3) Процентное соотношение числа участников из определенных округов:", percentage_of_districts)
+    print("3) Процентное соотношение числа участников:", percentage_of_districts)
 
     output_file_path = 'res.csv'
     write_students_by_subject_to_csv(students_data, 'математика', output_file_path)
