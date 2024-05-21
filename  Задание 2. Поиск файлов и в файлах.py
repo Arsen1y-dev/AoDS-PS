@@ -3,29 +3,34 @@ import os
 import re
 import chardet
 
-files = []
-letter = input('Задайте букву: ')
-for file in os.listdir('task2'):
-    if fnmatch.fnmatch(file, '*.txt'):
-        filename = file[:-4]
-        if filename[0] == letter:
-            if len(filename) >= 7:
-                if filename[-2] in '1234567890':
-                    files.append(file)
+files = []  # создаем пустой список для хранения имен файлов
+letter = input('Задайте букву: ')  # запрашиваем у пользователя букву
+for file in os.listdir('task2'):  # перебираем все файлы в директории 'task2'
+    if fnmatch.fnmatch(file, '*.txt'):  # проверяем, является ли файл текстовым (*.txt)
+        filename = file[:-4]  # извлекаем имя файла без расширения
+        if filename[0] == letter:  # проверяем, начинается ли имя файла с заданной буквы
+            if len(filename) >= 7:  # проверяем, что длина имени файла не менее 7 символов
+                if filename[-2] in '1234567890':  # проверяем, что предпоследний символ имени файла - цифра
+                    files.append(file)  # добавляем файл в список files
 
 def detect_encoding(file_path):
-    with open(file_path, 'rb') as f:
-        result = chardet.detect(f.read())
-    return result['encoding']
+    """
+    Определяет кодировку файла, используя библиотеку chardet.
+    """
+    with open(file_path, 'rb') as f:  # открываем файл в бинарном режиме для чтения
+        result = chardet.detect(f.read())  # определяем кодировку с помощью chardet
+    return result['encoding']  # возвращаем кодировку
 
-# время в формате hh:mm или hh:mm:ss;
 def find_time_in_files(file):
-    encoding = detect_encoding(file)
-    time_pattern = re.compile(r'\b(?:[01]\d|2[0-3]):[0-5]\d(?::[0-5]\d)?\b')
-    with open(file, 'r', encoding=encoding) as f:
-        content = f.read()
-    matches = re.findall(time_pattern, content)
-    return matches
+    """
+    Ищет время в формате hh:mm или hh:mm:ss в файле.
+    """
+    encoding = detect_encoding(file)  # определяем кодировку файла
+    time_pattern = re.compile(r'\b(?:[01]\d|2[0-3]):[0-5]\d(?::[0-5]\d)?\b')  # регулярное выражение для поиска времени
+    with open(file, 'r', encoding=encoding) as f:  # открываем файл в текстовом режиме с определенной кодировкой
+        content = f.read()  # считываем содержимое файла
+    matches = re.findall(time_pattern, content)  # ищем совпадения с помощью регулярного выражения
+    return matches  # возвращаем найденные совпадения
 
 # email-адреса;
 def find_emails_in_files(file):
@@ -84,7 +89,7 @@ def find_russian_vehicle_numbers(file):
 
 
 for file in files:
-    file_path = os.path.join('task2', file)
+    file_path = os.path.join('task2', file) # формируем полный путь к файлу
     print(f"В файле {file}:")
     if find_time_in_files(file_path):
         time = find_time_in_files(file_path)

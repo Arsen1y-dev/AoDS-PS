@@ -1,0 +1,10 @@
+star_name,brightness,constellation_name,latin_name,abbreviation,area,neighboring_constellations
+Rigel,0.12,Orion,Orion,Ori,594.1,"Taurus, Gemini, Eridanus"
+Betelgeuse,1.2,Orion,Orion,Ori,594.1,"Taurus, Gemini, Eridanus"
+Bellatrix,1.64,Orion,Orion,Ori,594.1,"Taurus, Gemini, Eridanus"
+Alioth,1.76,Ursa Major,Ursa Major,UMa,1279.7,"Draco, Leo, Canes Venatici"
+Dubhe,1.81,Ursa Major,Ursa Major,UMa,1279.7,"Draco, Leo, Canes Venatici"
+Merak,2.34,Ursa Major,Ursa Major,UMa,1279.7,"Draco, Leo, Canes Venatici"
+Deneb,1.25,Cygnus,Cygnus,Cyg,804.0,"Cepheus, Lyra, Aquila"
+Sadr,2.23,Cygnus,Cygnus,Cyg,804.0,"Cepheus, Lyra, Aquila"
+Gienah,2.48,Cygnus,Cygnus,Cyg,804.0,"Cepheus, Lyra, Aquila"
