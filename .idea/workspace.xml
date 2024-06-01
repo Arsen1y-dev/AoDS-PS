@@ -5,10 +5,10 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="50ef5ec8-0234-4855-aacf-d12570862e44" name="Changes" comment="ц">
-      <change beforePath="$PROJECT_DIR$/.idea/AoDS&amp;PS.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/AoDS&amp;PS.iml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/constellations.json" beforeDir="false" afterPath="$PROJECT_DIR$/constellations.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Задание 4. Файлы в формате JSON.py" beforeDir="false" afterPath="$PROJECT_DIR$/Задание 4. Файлы в формате JSON.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/6.3. Модуль requests.ipynb" beforeDir="false" afterPath="$PROJECT_DIR$/6.3. Модуль requests.ipynb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out.bmp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Задание 5. Бинарные файлы.py" beforeDir="false" afterPath="$PROJECT_DIR$/Задание 5. Бинарные файлы.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
